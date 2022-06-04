@@ -3,6 +3,7 @@ server:
 
 spring:
   datasource:
-    name: wang-music
-    username: root
-    password: fengdu12
+    name: ${MYSQL_HOST}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_HOST}:3306/${DATABASE_NAME}?characterEncoding=UTF8&userSSL=false
