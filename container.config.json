@@ -1,7 +1,7 @@
 {
   "containerPort": 80,
   "minNum": 0,
-  "maxNum": 5,
+  "maxNum": 50,
   "cpu": 1,
   "mem": 1,
   "policyType": "cpu",
@@ -10,7 +10,6 @@
   "customLogs": "stdout",
   "dataBaseName":"wang_music",
   "executeSQLs":[
-    "CREATE DATABASE IF NOT EXISTS wang_music;",
-    "USE wang_music;"
+    "CREATE DATABASE IF NOT EXISTS wang_music;"
   ]
 }
