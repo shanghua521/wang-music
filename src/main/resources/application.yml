@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${APPLICATION_PORT}
 
 spring:
   datasource:
@@ -15,3 +15,5 @@ spring:
     enabled: true
   config:
     import: optional:file:.env[.properties]
+  profiles:
+    active: dev
