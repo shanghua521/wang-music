@@ -1,4 +1,4 @@
-CREATE TABLE user_role
+CREATE TABLE IF NOT EXISTS  user_role
 (
     user_id VARCHAR(32) NOT NULL COMMENT '用户ID',
     role_id VARCHAR(32) NOT NULL COMMENT '角色ID',

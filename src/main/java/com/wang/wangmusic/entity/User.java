@@ -1,22 +1,30 @@
 package com.wang.wangmusic.entity;
 
 import com.wang.wangmusic.enums.Gender;
-import lombok.*;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.SelectBeforeUpdate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Entity
+@DynamicInsert
+@DynamicUpdate
+@RequiredArgsConstructor
 @ToString(callSuper = true)
-public class User extends AbstractEntity implements Serializable {
+@Table(name = "`user`")
+public class User extends AbstractEntity implements Serializable, UserDetails {
 
     @Column(name = "username", unique = true, nullable = false, length = 64)
     private String username;
@@ -34,10 +42,10 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "locked")
+    @Column(name = "locked", columnDefinition = "tinyint default 0")
     private Boolean locked;
 
-    @Column(name = "enabled")
+    @Column(name = "enabled", columnDefinition = "tinyint default 1")
     private Boolean enable;
 
     @Column(name = "last_login_ip")
@@ -46,9 +54,37 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name = "last_login_time")
     private Date lastLoginTime;
 
-    @ManyToMany(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-
     @ToString.Exclude
     private List<Role> roles;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    // 当前用户是否没过期
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    // 当前用户是否被锁定
+    @Override
+    public boolean isAccountNonLocked() {
+        return !getLocked();
+    }
+
+    // 当前用户凭证是否没过期
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    // 当前用户是否启用
+    @Override
+    public boolean isEnabled() {
+        return getEnable();
+    }
 }

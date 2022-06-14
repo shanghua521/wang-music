@@ -1,4 +1,4 @@
-CREATE TABLE user
+CREATE TABLE IF NOT EXISTS `user`
 (
     id              VARCHAR(32)          NOT NULL PRIMARY KEY COMMENT '用户ID',
     username        VARCHAR(64)          NOT NULL COMMENT '用户名',

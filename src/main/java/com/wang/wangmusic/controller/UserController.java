@@ -1,11 +1,10 @@
 package com.wang.wangmusic.controller;
 
+import com.wang.wangmusic.dto.UserCreateDto;
 import com.wang.wangmusic.mapper.UserMapper;
 import com.wang.wangmusic.service.UserService;
 import com.wang.wangmusic.vo.UserVo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +19,11 @@ public class UserController {
     public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
+    }
+
+    @PostMapping("/")
+    UserVo create(@RequestBody UserCreateDto userCreateDto) {
+        return userMapper.toVo(userService.create(userCreateDto));
     }
 
     @GetMapping
