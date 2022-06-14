@@ -20,6 +20,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @MappedSuperclass
 public abstract class AbstractEntity {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "ksuid")

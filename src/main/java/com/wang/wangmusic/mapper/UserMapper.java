@@ -1,5 +1,6 @@
 package com.wang.wangmusic.mapper;
 
+import com.wang.wangmusic.dto.UserCreateDto;
 import com.wang.wangmusic.dto.UserDto;
 import com.wang.wangmusic.entity.User;
 import com.wang.wangmusic.vo.UserVo;
@@ -13,4 +14,6 @@ public interface UserMapper {
     UserDto toDto(User user);
 
     UserVo toVo(UserDto userDto);
+
+    User createEntity(UserCreateDto userCreateDto);
 }

@@ -6,14 +6,13 @@ import com.wang.wangmusic.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
-@SpringBootTest
+@DataJpaTest
 class UserRepositoryTest {
 
     @Autowired
@@ -40,7 +39,7 @@ class UserRepositoryTest {
         role.setName("aaa");
         roleRepository.save(role);
 
-        user.setRoles(Collections.singletonList(role));
+        user.setRoles(new ArrayList<>(Collections.singletonList(role)));
         userRepository.save(user);
         userRepository.flush();
     }
@@ -48,6 +47,7 @@ class UserRepositoryTest {
     @Test
     void findByUsername() {
         User dbUser = userRepository.getByUsername("殇花");
+        System.out.println(dbUser);
         System.out.println(dbUser.getRoles());
     }
 

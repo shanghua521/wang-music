@@ -1,4 +1,4 @@
-CREATE TABLE role
+CREATE TABLE IF NOT EXISTS role
 (
     id           VARCHAR(32)  NOT NULL PRIMARY KEY COMMENT '角色ID',
     name         VARCHAR(128) NULL COMMENT '角色名称',
