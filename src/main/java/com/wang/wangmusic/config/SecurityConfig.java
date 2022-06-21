@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 // 允许 POST SIGN_UP_URL
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+//                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 // 其他 Request 鉴权
                 .anyRequest().authenticated()
                 .and()

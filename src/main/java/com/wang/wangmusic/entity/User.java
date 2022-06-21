@@ -43,10 +43,10 @@ public class User extends AbstractEntity implements Serializable, UserDetails {
     private String email;
 
     @Column(name = "locked", columnDefinition = "tinyint default 0")
-    private Boolean locked;
+    private Boolean locked = false;
 
     @Column(name = "enabled", columnDefinition = "tinyint default 1")
-    private Boolean enable;
+    private Boolean enable = true;
 
     @Column(name = "last_login_ip")
     private String lasLoginIp;
