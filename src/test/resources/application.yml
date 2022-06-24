@@ -25,3 +25,6 @@ spring:
     init:
       platform: h2
       continue-on-error: false
+  mvc:
+    path-match:
+      matching-strategy: ant_path_matcher
