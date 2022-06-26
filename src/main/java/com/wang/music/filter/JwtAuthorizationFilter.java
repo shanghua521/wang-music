@@ -3,6 +3,8 @@ package com.wang.music.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.wang.music.config.SecurityConfig;
+import com.wang.music.entity.User;
+import com.wang.music.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,11 +15,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
+
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+
+    private final UserService userService;
+
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserService userService) {
         super(authenticationManager);
+        this.userService = userService;
     }
 
     @Override
@@ -37,7 +43,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             String token = header.substring(SecurityConfig.TOKEN_PREFIX.length());
             String username = JWT.require(Algorithm.HMAC512(SecurityConfig.SECRET)).build().verify(token).getSubject();
             if (username != null) {
-                return new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+                User user = userService.loadUserByUsername(username);
+                return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
             }
         }
         return null;
